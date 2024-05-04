@@ -47,6 +47,7 @@ lo4-e5:
 
 
 *Addition:*
+
 *lo4:*
 
 7. You need to deploy WordPress and MySQL using specific image versions and ensure that WordPress does not connect to the database using the root user:
