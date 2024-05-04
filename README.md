@@ -47,8 +47,9 @@ lo4-e5:
 
 
 *Addition:*
-1) lo4:
+1) *lo4:*
 7. You need to deploy WordPress and MySQL using specific image versions and ensure that WordPress does not connect to the database using the root user:
+
    
 | Task | Command | Description |
 |------|---------|-------------|
@@ -59,9 +60,30 @@ lo4-e5:
 
 8. Suitable methodologies for running a simple Python application requiring a database for persistent data storage across two different scenarios: development/testing on   a developer laptop and production deployment with scalability and automated image updates:
 
+
  | Scenario | Methodology | Command | Justification |
 |----------|-------------|---------|---------------|
 | Development and Testing on a Developer Laptop | Use Docker Compose with a Dockerfile for the Python app and `docker-compose.yml` for orchestrating the app and a PostgreSQL database. | `docker-compose up` | Docker Compose manages both the application and its database dependencies in isolated containers, simplifying development and testing. This setup can easily be mirrored on any developer's laptop, ensuring consistency across environments. PostgreSQL is chosen for its closer alignment with production-like settings compared to SQLite. |
 | Production Deployment with At Least 10 Instances and Persistent Storage | Deploy on Kubernetes using deployments for the app and StatefulSets for PostgreSQL. Use Helm for package management and Jenkins for CI/CD to handle deployments and updates. | `helm install my-python-app ./my-helm-chart` <br> `kubectl scale deployment/my-python-app --replicas=10` | Kubernetes provides robust tools for managing scalable applications and persistent storage. Helm simplifies the deployment of complex applications. Scaling up to 10 instances is managed via Kubernetes' declarative syntax, and Jenkins automates the build and deployment processes for new image versions, ensuring continuous integration and deployment. |
 
    
+2) *lo5:*
+9. Troubleshooting Podman Command for MySQL (The command provided doesn't specify a database root password, which is required by the MySQL image to start correctly. The -d flag at the end does not specify a detach mode properly and lacks an image at the end.):
+    
+| Task | Issue Identified | Corrected Command | Explanation |
+|------|------------------|-------------------|-------------|
+| 9    | Missing root password specification and incorrect syntax for detach mode. | `podman run -d --name mysql -e MYSQL_USER=mike -e MYSQL_PASSWORD=mike -e MYSQL_ROOT_PASSWORD=notSoSecret mysql:5.7` | Added `MYSQL_ROOT_PASSWORD=notSoSecret` to satisfy MySQL's requirement for a root password. `-d` for detached mode is correctly used before specifying the image name. |
+
+
+10. Feature of Container Images for Deployment:
+    
+| Task | Feature | Description |
+|------|---------|-------------|
+| 10   | Consistency and Isolation | Container images ensure that the software runs the same way in any environment. This isolation between the application and its surroundings means developers don't have to worry about changes in the environment affecting the application's performance or functionalities. |
+
+
+11. Troubleshooting Dockerfile (The Dockerfile command RUN apt update && echo it works" fails due to a syntax error with unmatched quotes and no instruction to install any packages):
+    
+| Task | Issue Identified | Corrected Dockerfile Line | Explanation |
+|------|------------------|--------------------------|-------------|
+| 11   | Syntax error and ineffective update command. | `RUN apt-get update && apt-get install -y some-package` | Corrected syntax by removing the unmatched quote and added an actual install command (`apt-get install -y some-package`) to make the update meaningful. The placeholder `some-package` should be replaced with actual package names as needed. |
