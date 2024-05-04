@@ -48,6 +48,7 @@ lo4-e5:
 
 *Addition:*
 *lo4:*
+
 7. You need to deploy WordPress and MySQL using specific image versions and ensure that WordPress does not connect to the database using the root user:
 
    
@@ -69,6 +70,7 @@ lo4-e5:
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
    
 *lo5:*
+
 9. Troubleshooting Podman Command for MySQL (The command provided doesn't specify a database root password, which is required by the MySQL image to start correctly. The -d flag at the end does not specify a detach mode properly and lacks an image at the end.):
     
 | Task | Issue Identified | Corrected Command | Explanation |
@@ -92,6 +94,7 @@ lo4-e5:
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
  *lo6:*
+ 
  12. Deploy the httpd Application on OpenShift (Deploying the httpd application on OpenShift, ensuring high availability and load balancing by utilizing multiple pods, and exposing the application through a route.):
 
  | Task | Command | Description |
