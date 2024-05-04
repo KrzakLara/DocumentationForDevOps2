@@ -47,7 +47,7 @@ lo4-e5:
 
 
 *Addition:*
-1) *lo4:*
+*lo4:*
 7. You need to deploy WordPress and MySQL using specific image versions and ensure that WordPress does not connect to the database using the root user:
 
    
@@ -66,8 +66,9 @@ lo4-e5:
 | Development and Testing on a Developer Laptop | Use Docker Compose with a Dockerfile for the Python app and `docker-compose.yml` for orchestrating the app and a PostgreSQL database. | `docker-compose up` | Docker Compose manages both the application and its database dependencies in isolated containers, simplifying development and testing. This setup can easily be mirrored on any developer's laptop, ensuring consistency across environments. PostgreSQL is chosen for its closer alignment with production-like settings compared to SQLite. |
 | Production Deployment with At Least 10 Instances and Persistent Storage | Deploy on Kubernetes using deployments for the app and StatefulSets for PostgreSQL. Use Helm for package management and Jenkins for CI/CD to handle deployments and updates. | `helm install my-python-app ./my-helm-chart` <br> `kubectl scale deployment/my-python-app --replicas=10` | Kubernetes provides robust tools for managing scalable applications and persistent storage. Helm simplifies the deployment of complex applications. Scaling up to 10 instances is managed via Kubernetes' declarative syntax, and Jenkins automates the build and deployment processes for new image versions, ensuring continuous integration and deployment. |
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
    
-2) *lo5:*
+*lo5:*
 9. Troubleshooting Podman Command for MySQL (The command provided doesn't specify a database root password, which is required by the MySQL image to start correctly. The -d flag at the end does not specify a detach mode properly and lacks an image at the end.):
     
 | Task | Issue Identified | Corrected Command | Explanation |
@@ -87,3 +88,24 @@ lo4-e5:
 | Task | Issue Identified | Corrected Dockerfile Line | Explanation |
 |------|------------------|--------------------------|-------------|
 | 11   | Syntax error and ineffective update command. | `RUN apt-get update && apt-get install -y some-package` | Corrected syntax by removing the unmatched quote and added an actual install command (`apt-get install -y some-package`) to make the update meaningful. The placeholder `some-package` should be replaced with actual package names as needed. |
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ *lo6:*
+ 12. Deploy the httpd Application on OpenShift (Deploying the httpd application on OpenShift, ensuring high availability and load balancing by utilizing multiple pods, and exposing the application through a route.):
+
+ | Task | Command | Description |
+|------|---------|-------------|
+| Deploy httpd application | `oc new-app --name=httpd --docker-image=httpd:2.4 --labels=app=httpd` | This command creates a new application in OpenShift using the httpd Docker image version 2.4. The application is named 'httpd' and appropriately labeled. |
+| Scale to 2 pods | `oc scale --replicas=2 deployment/httpd` | Scale the deployment to have 2 pods to ensure high availability and load balancing. |
+| Expose the service | `oc expose svc/httpd` | Expose the httpd service to external traffic by creating a route in OpenShift. This command automatically uses the service 'httpd' and exposes it externally. |
+| Use a custom template (optional) | `oc new-app -f custom-httpd-template.yaml` | If using a custom template named 'custom-httpd-template.yaml', deploy it with this command. Ensure the template includes specifications for no resource limits, as required. |
+
+
+13. Why Use Docker Swarm Over OpenShift for a Startup (The rationale behind choosing Docker Swarm over OpenShift for a simple startup that lacks a dedicated DevOps employee.):
+
+| Task | Reason | Description | Command |
+|------|--------|-------------|---------|
+| Choose Docker Swarm | Simplicity and Lower Operational Overhead | Docker Swarm is inherently simpler to set up and manage compared to OpenShift. For a startup without a dedicated DevOps team, Docker Swarm provides a more straightforward approach to container orchestration. It integrates directly with Docker, which many developers are familiar with, reducing the learning curve and operational complexity. This makes it more suitable for small teams or startups looking to quickly deploy and manage containerized applications without the need for advanced configurations or the overhead that comes with more comprehensive solutions like OpenShift. | `docker swarm init` |
+
+
