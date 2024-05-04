@@ -35,3 +35,33 @@ lo4-e5:
 | Manage storage for applications | `kubectl apply -f my-configmap.yaml` | Apply a ConfigMap or Secret from a file to externalize application configurations. For persistent storage, use: `kubectl apply -f my-persistentvolumeclaim.yaml` |
 | Configure applications for reliability | `kubectl scale deployment my-app --replicas=3` | Scale an application to increase availability and resilience. Adjust the number of replicas based on your requirements. |
 | Manage application updates | `kubectl set image deployment/my-app my-app=my-image:v2` | Update the application to a new version of the container image and manage rollbacks using deployment strategies. |
+
+
+
+
+
+
+
+
+
+
+
+*Addition:*
+1) lo4:
+7. You need to deploy WordPress and MySQL using specific image versions and ensure that WordPress does not connect to the database using the root user:
+   
+| Task | Command | Description |
+|------|---------|-------------|
+| Deploy MySQL container | `podman run -d --name mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wpuser -e MYSQL_PASSWORD=wpuserpw mysql:5.7` | Start a MySQL container named `mysql`. Set a root password, create a WordPress database, and establish a non-root user `wpuser` with a specified password. Uses MySQL version 5.7. |
+| Deploy WordPress container | `podman run -d --name wordpress --link mysql -e WORDPRESS_DB_HOST=mysql -e WORDPRESS_DB_USER=wpuser -e WORDPRESS_DB_PASSWORD=wpuserpw -e WORDPRESS_DB_NAME=wordpress -p 8080:80 wordpress:php8.2` | Deploy a WordPress container named `wordpress`. It links to the MySQL container and configures to connect to the MySQL database using the non-root user credentials. Maps port 80 inside the container to port 8080 on the host. Uses the WordPress image with PHP 8.2. |
+| Document commands | `echo "podman run -d --name mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wpuser -e MYSQL_PASSWORD=wpuserpw mysql:5.7" > LO4_M`<br>`echo "podman run -d --name wordpress --link mysql -e WORDPRESS_DB_HOST=mysql -e WORDPRESS_DB_USER=wpuser -e WORDPRESS_DB_PASSWORD=wpuserpw -e WORDPRESS_DB_NAME=wordpress -p 8080:80 wordpress:php8.2" >> LO4_M` | Record the commands used in previous steps into a file named `LO4_M`. The `>` operator is used to create or overwrite the file with the first command, while `>>` is used to append the second command to the same file. |
+
+
+8. Suitable methodologies for running a simple Python application requiring a database for persistent data storage across two different scenarios: development/testing on   a developer laptop and production deployment with scalability and automated image updates:
+
+ | Scenario | Methodology | Command | Justification |
+|----------|-------------|---------|---------------|
+| Development and Testing on a Developer Laptop | Use Docker Compose with a Dockerfile for the Python app and `docker-compose.yml` for orchestrating the app and a PostgreSQL database. | `docker-compose up` | Docker Compose manages both the application and its database dependencies in isolated containers, simplifying development and testing. This setup can easily be mirrored on any developer's laptop, ensuring consistency across environments. PostgreSQL is chosen for its closer alignment with production-like settings compared to SQLite. |
+| Production Deployment with At Least 10 Instances and Persistent Storage | Deploy on Kubernetes using deployments for the app and StatefulSets for PostgreSQL. Use Helm for package management and Jenkins for CI/CD to handle deployments and updates. | `helm install my-python-app ./my-helm-chart` <br> `kubectl scale deployment/my-python-app --replicas=10` | Kubernetes provides robust tools for managing scalable applications and persistent storage. Helm simplifies the deployment of complex applications. Scaling up to 10 instances is managed via Kubernetes' declarative syntax, and Jenkins automates the build and deployment processes for new image versions, ensuring continuous integration and deployment. |
+
+   
