@@ -19,6 +19,7 @@ e4:
 | 13   | Create a file `docker-compose.yml` | Create a Docker Compose file to define services for WordPress and MySQL using the configuration details from steps 5 and 6. |
 | 14   | `podman-compose up -d` | Deploy the WordPress and MySQL services using the created Docker Compose file in detached mode. |
 
+____________________________________________________________________________________________________________________________________________________________________________
 
 
 e5:
@@ -36,6 +37,7 @@ e5:
 | Configure applications for reliability | `kubectl scale deployment my-app --replicas=3` | Scale an application to increase availability and resilience. Adjust the number of replicas based on your requirements. |
 | Manage application updates | `kubectl set image deployment/my-app my-app=my-image:v2` | Update the application to a new version of the container image and manage rollbacks using deployment strategies. |
 
+____________________________________________________________________________________________________________________________________________________________________________
 
 e6:
 | Task | Command | Description |
@@ -51,6 +53,7 @@ e6:
 | Manage storage for applications | `kubectl apply -f my-configmap.yaml` | Apply a ConfigMap or Secret from a file to externalize application configurations. For persistent storage, use: `kubectl apply -f my-persistentvolumeclaim.yaml` |
 | Configure applications for reliability | `kubectl scale deployment my-app --replicas=3` | Scale an application to increase availability and resilience. Adjust the number of replicas based on your requirements. |
 | Manage application updates | `kubectl set image deployment/my-app my-app=my-image:v2` | Update the application to a new version of the container image and manage rollbacks using deployment strategies. |
+____________________________________________________________________________________________________________________________________________________________________________
 
 
 e7:
@@ -67,6 +70,7 @@ e7:
 | Manage storage for applications | `kubectl apply -f my-configmap.yaml` | Apply a ConfigMap or Secret from a file to externalize application configurations. For persistent storage, use: `kubectl apply -f my-persistentvolumeclaim.yaml` |
 | Configure applications for reliability | `kubectl scale deployment my-app --replicas=3` | Scale an application to increase availability and resilience. Adjust the number of replicas based on your requirements. |
 | Manage application updates | `kubectl set image deployment/my-app my-app=my-image:v2` | Update the application to a new version of the container image and manage rollbacks using deployment strategies. |
+____________________________________________________________________________________________________________________________________________________________________________
 
 e8:
 | Task | Command | Description |
@@ -83,6 +87,7 @@ e8:
 | Configure applications for reliability | `kubectl scale deployment my-app --replicas=3` | Scale an application to increase availability and resilience. Adjust the number of replicas based on your requirements. |
 | Manage application updates | `kubectl set image deployment/my-app my-app=my-image:v2` | Update the application to a new version of the container image and manage rollbacks using deployment strategies. |
 
+____________________________________________________________________________________________________________________________________________________________________________
 
 e9:
 | Task | Command | Description |
@@ -95,6 +100,7 @@ e9:
 | Restore data | `kubectl cp /local/path [POD_NAME]:/path/to/data` | Restore data to a pod from your local machine. Replace `/local/path`, `[POD_NAME]`, and `/path/to/data` with appropriate values. |
 | Troubleshoot storage issues | `kubectl describe pvc [PVC_NAME]` | Describe a persistent volume claim to troubleshoot issues. Replace `[PVC_NAME]` with the name of your PVC. |
 
+____________________________________________________________________________________________________________________________________________________________________________
 
 e10:
 | Task | Command | Description |
@@ -124,8 +130,9 @@ e11:
 | Rolling update deployment strategy | `kubectl apply -f my-rollingupdate-deployment.yaml` | Apply a deployment configuration that uses the RollingUpdate strategy to update the application by gradually replacing old pods with new ones. |
 | Canary deployment strategy | `kubectl apply -f my-canary-deployment.yaml` | Apply a deployment configuration that uses the Canary strategy to test a new version of the application with a subset of users before full deployment. |
 | Blue-Green deployment strategy | `kubectl apply -f my-bluegreen-deployment.yaml` | Apply a deployment configuration that uses the Blue-Green strategy to run two separate environments (blue and green) and switch traffic between them. |
+____________________________________________________________________________________________________________________________________________________________________________
 
-e12:
+E12:
 | Task | Command | Description |
 |------|---------|-------------|
 | Deploy web applications | `kubectl create deployment web-app --image=my-web-app` | Deploy a web application using a specified container image. Replace `my-web-app` with your application image name. |
