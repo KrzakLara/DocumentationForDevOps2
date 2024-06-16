@@ -29,7 +29,6 @@ e4-lo3:
 Write a Containerfile/Dockerfile which takes the official Ubuntu base image, installs apache2, and sets the default command to start apache2. It should set the environment variable STUDENT to your username and surname. Port 80 should be exposed. Bear in mind that Ubuntu uses apt and apt-get to manage packages. Save it as a file called LO3_D.
 
 
-## Task Breakdown
 
 | Task                      | Command                                             | Description                                                                                       |
 |---------------------------|-----------------------------------------------------|---------------------------------------------------------------------------------------------------|
@@ -38,24 +37,6 @@ Write a Containerfile/Dockerfile which takes the official Ubuntu base image, ins
 | Install Apache2           | `RUN apt-get update && apt-get install -y apache2`  | Updates the package lists and installs `apache2` using `apt-get`.                                 |
 | Expose Port 80            | `EXPOSE 80`                                         | Indicates that the container will listen on port 80 at runtime.                                   |
 | Default Command           | `CMD ["apache2ctl", "-D", "FOREGROUND"]`            | Runs `apache2` in the foreground, which is required for Docker to keep the container running.     |
-
-## Dockerfile
-
-```Dockerfile
-# Use the official Ubuntu base image
-FROM ubuntu:latest
-
-# Set environment variable
-ENV STUDENT="your_username your_surname"
-
-# Install apache2
-RUN apt-get update && apt-get install -y apache2
-
-# Expose port 80
-EXPOSE 80
-
-# Set the default command to start apache2
-CMD ["apache2ctl", "-D", "FOREGROUND"]
 
 ____________________________________________________________________________________________________________________________________________________________________________
 
