@@ -1,6 +1,6 @@
 # DocumentationForDevOps2 (MI2)
 
-redhat: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/auth?response_type=code&client_id=rha-webapp-prod&redirect_uri=https%3A%2F%2Frha.ole.redhat.com%2Frha%2Fauth_idp%2F%40%40redirect&scope=profile+openid+email&state=u3Rk4pzDBgC9Q73W0OVebnw923BuFN
+redhat: [https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/auth?response_type=code&client_id=rha-webapp-prod&redirect_uri=https%3A%2F%2Frha.ole.redhat.com%2Frha%2Fauth_idp%2F%40%40redirect&scope=profile+openid+email&state=u3Rk4pzDBgC9Q73W0OVebnw923BuFN](https://rha.ole.redhat.com/rha/app/summary)
 
 *Exercises:*
 
