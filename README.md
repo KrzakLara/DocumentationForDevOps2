@@ -4,7 +4,7 @@ redhat: [https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-conn
 
 *Exercises:*
 
-e4:
+e4-lo3:
 | Step | Command | Description |
 |------|---------|-------------|
 | 1    | `ssh username@vm-address` | Use SSH to log into the workstation VM provided by the RH Academy. Replace `username` and `vm-address` with actual values. |
@@ -21,6 +21,41 @@ e4:
 | 12   | N/A | Review sample Podman Compose files at the provided GitHub repositories to understand how to structure your own Compose files. |
 | 13   | Create a file `docker-compose.yml` | Create a Docker Compose file to define services for WordPress and MySQL using the configuration details from steps 5 and 6. |
 | 14   | `podman-compose up -d` | Deploy the WordPress and MySQL services using the created Docker Compose file in detached mode. |
+
+
+
+6. [LO3_D, 5 pts]
+
+Write a Containerfile/Dockerfile which takes the official Ubuntu base image, installs apache2, and sets the default command to start apache2. It should set the environment variable STUDENT to your username and surname. Port 80 should be exposed. Bear in mind that Ubuntu uses apt and apt-get to manage packages. Save it as a file called LO3_D.
+
+
+## Task Breakdown
+
+| Task                      | Command                                             | Description                                                                                       |
+|---------------------------|-----------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| Base Image                | `FROM ubuntu:latest`                                | Specifies the base image to use, which is the latest version of Ubuntu.                           |
+| Set Environment Variable  | `ENV STUDENT="your_username your_surname"`          | Sets the environment variable `STUDENT` to your username and surname.                             |
+| Install Apache2           | `RUN apt-get update && apt-get install -y apache2`  | Updates the package lists and installs `apache2` using `apt-get`.                                 |
+| Expose Port 80            | `EXPOSE 80`                                         | Indicates that the container will listen on port 80 at runtime.                                   |
+| Default Command           | `CMD ["apache2ctl", "-D", "FOREGROUND"]`            | Runs `apache2` in the foreground, which is required for Docker to keep the container running.     |
+
+## Dockerfile
+
+```Dockerfile
+# Use the official Ubuntu base image
+FROM ubuntu:latest
+
+# Set environment variable
+ENV STUDENT="your_username your_surname"
+
+# Install apache2
+RUN apt-get update && apt-get install -y apache2
+
+# Expose port 80
+EXPOSE 80
+
+# Set the default command to start apache2
+CMD ["apache2ctl", "-D", "FOREGROUND"]
 
 ____________________________________________________________________________________________________________________________________________________________________________
 
@@ -166,7 +201,8 @@ ________________________________________________________________________________
 
 *lo4:*
 
-7. You need to deploy WordPress and MySQL using specific image versions and ensure that WordPress does not connect to the database using the root user:
+7. [LO4_M, 9 pts]
+Deploy WordPress and MySQL containers using podman. The WordPress container should successfully connect to the MySQL database container. Use images mysql:5.7 and wordpress:php8.2 from Docker Hub. The WordPress container should be named wordpress and the MySQL container should be named mysql. The WordPress container should not connect to the database by using the root user. Set required environment variables as you see fit. Note down the command used to complete this task into a file called LO4_M.
 
    
 | Task | Command | Description |
@@ -176,7 +212,11 @@ ________________________________________________________________________________
 | Document commands | `echo "podman run -d --name mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wpuser -e MYSQL_PASSWORD=wpuserpw mysql:5.7" > LO4_M`<br>`echo "podman run -d --name wordpress --link mysql -e WORDPRESS_DB_HOST=mysql -e WORDPRESS_DB_USER=wpuser -e WORDPRESS_DB_PASSWORD=wpuserpw -e WORDPRESS_DB_NAME=wordpress -p 8080:80 wordpress:php8.2" >> LO4_M` | Record the commands used in previous steps into a file named `LO4_M`. The `>` operator is used to create or overwrite the file with the first command, while `>>` is used to append the second command to the same file. |
 
 
-8. Suitable methodologies for running a simple Python application requiring a database for persistent data storage across two different scenarios: development/testing on   a developer laptop and production deployment with scalability and automated image updates:
+8. [LO4_D, 5 pts]
+Choose and justify an appropriate methodology for running a simple Python application that requires a database for persistent data storage for the following scenarios:
+a) Development and testing on a developer laptop
+b) Production deployment with at least 10 instances and persistent storage
+Note that the company has multiple applications which it needs to deploy and also wants to automatically build new images for new versions of base images.
 
 
  | Scenario | Methodology | Command | Justification |
@@ -188,21 +228,24 @@ ________________________________________________________________________________
    
 *lo5:*
 
-9. Troubleshooting Podman Command for MySQL (The command provided doesn't specify a database root password, which is required by the MySQL image to start correctly. The -d flag at the end does not specify a detach mode properly and lacks an image at the end.):
+9. [LO5_M, 4.5 pts]
+Troubleshoot why the following command is wrong and why the container does not start successfully/terminates immediately. Explain your findings and correct the command. Note down both your findings and the command.
     
 | Task | Issue Identified | Corrected Command | Explanation |
 |------|------------------|-------------------|-------------|
 | 9    | Missing root password specification and incorrect syntax for detach mode. | `podman run -d --name mysql -e MYSQL_USER=mike -e MYSQL_PASSWORD=mike -e MYSQL_ROOT_PASSWORD=notSoSecret mysql:5.7` | Added `MYSQL_ROOT_PASSWORD=notSoSecret` to satisfy MySQL's requirement for a root password. `-d` for detached mode is correctly used before specifying the image name. |
 
 
-10. Feature of Container Images for Deployment:
+10. [LO5_M, 4.5 pts]
+What feature of container images enables you to deploy containers across multiple environments without having to care about accidentally changing the application code?
     
 | Task | Feature | Description |
 |------|---------|-------------|
 | 10   | Consistency and Isolation | Container images ensure that the software runs the same way in any environment. This isolation between the application and its surroundings means developers don't have to worry about changes in the environment affecting the application's performance or functionalities. |
 
 
-11. Troubleshooting Dockerfile (The Dockerfile command RUN apt update && echo it works" fails due to a syntax error with unmatched quotes and no instruction to install any packages):
+11. [LO5_D, 5 pts]
+Troubleshoot why the following Dockerfile is not building. Explain your findings and correct the command. Note down both your findings and the corrected Dockerfile.
     
 | Task | Issue Identified | Corrected Dockerfile Line | Explanation |
 |------|------------------|--------------------------|-------------|
@@ -212,7 +255,10 @@ ________________________________________________________________________________
 
  *lo6:*
  
- 12. Deploy the httpd Application on OpenShift (Deploying the httpd application on OpenShift, ensuring high availability and load balancing by utilizing multiple pods, and exposing the application through a route.):
+12. [LO6_M, 9 pts]
+Deploy the httpd application on OpenShift. There should be 2 pods in the deployment and a service load balancing traffic coming to httpd pods. Create a route to expose the service. If you decide to use a template, you need to use template called custom-httpd or template which has its description set to Custom HTTPD. If you are not using a template do not set resource limits and requests.
+Note that you will not be able to test your route without adding your FQDN to the list of URLs in /etc/hosts file. It is enough that it is created in OpenShift.
+There should be no image stream configured for this task. If you end up with image pull error, but you deployed everything as stated it is fine.
 
  | Task | Command | Description |
 |------|---------|-------------|
@@ -222,7 +268,8 @@ ________________________________________________________________________________
 | Use a custom template (optional) | `oc new-app -f custom-httpd-template.yaml` | If using a custom template named 'custom-httpd-template.yaml', deploy it with this command. Ensure the template includes specifications for no resource limits, as required. |
 
 
-13. Why Use Docker Swarm Over OpenShift for a Startup (The rationale behind choosing Docker Swarm over OpenShift for a simple startup that lacks a dedicated DevOps employee.):
+13. [LO6_D, 5 pts]
+Why would you use Docker Swarm instead of OpenShift for a simple startup company not having a dedicated DevOps employee?
 
 | Task | Reason | Description | Command |
 |------|--------|-------------|---------|
