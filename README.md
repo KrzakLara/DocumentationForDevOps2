@@ -1,6 +1,8 @@
 # DocumentationForDevOps2 (MI2)
 
-redhat: https://rha.ole.redhat.com/
+redhat: https://rha.ole.redhat.com/ 
+ili
+https://vcsa7.vua.cloud
 
 *Exercises:*
 
