@@ -227,8 +227,19 @@ sudo yum install -y podman
 # Verify Podman installation
 podman --version
 
+
+# Enable user namespaces
+echo "user.max_user_namespaces = 15000" | sudo tee -a /etc/sysctl.conf
+
+# Apply the changes
+sudo sysctl -p
+
+# Verify Podman installation
+podman --version
+
 # Run MySQL container
 podman run -d --name mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wpuser -e MYSQL_PASSWORD=wppass mysql:5.7
+
 
 
 | Task | Command | Description |
