@@ -218,9 +218,6 @@ ________________________________________________________________________________
 7. 
 Deploy WordPress and MySQL containers using podman. The WordPress container should successfully connect to the MySQL database container. Use images mysql:5.7 and wordpress:php8.2 from Docker Hub. The WordPress container should be named wordpress and the MySQL container should be named mysql. The WordPress container should not connect to the database by using the root user. Set required environment variables as you see fit. Note down the command used to complete this task into a file called LO4_M.
 
-
-# installing podman:
-
 # Install Podman
 sudo yum install -y podman
 
