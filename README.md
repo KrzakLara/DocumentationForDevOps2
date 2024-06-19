@@ -242,6 +242,29 @@ podman run -d --name mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE
 
 
 
+prije 2. stepa: # Pull the required images
+podman pull mysql:5.7
+podman pull wordpress:php7.4-apache
+
+# Run MySQL container
+podman run -d --name mysql \
+  -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+  -e MYSQL_DATABASE=wordpress \
+  -e MYSQL_USER=wpuser \
+  -e MYSQL_PASSWORD=wppass \
+  mysql:5.7
+
+# Run WordPress container
+podman run -d --name wordpress \
+  --env WORDPRESS_DB_HOST=mysql \
+  --env WORDPRESS_DB_USER=wpuser \
+  --env WORDPRESS_DB_PASSWORD=wppass \
+  --env WORDPRESS_DB_NAME=wordpress \
+  -p 8080:80 \
+  wordpress:php7.4-apache
+
+
+
 | Task | Command | Description |
 |------|---------|-------------|
 | Deploy MySQL container | `podman run -d --name mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wpuser -e MYSQL_PASSWORD=wpuserpw mysql:5.7` | Start a MySQL container named `mysql`. Set a root password, create a WordPress database, and establish a non-root user `wpuser` with a specified password. Uses MySQL version 5.7. |
