@@ -57,7 +57,7 @@ e4-lo3:
 
 
 
-6. [LO3_D, 5 pts]
+6. 
 
 Write a Containerfile/Dockerfile which takes the official Ubuntu base image, installs apache2, and sets the default command to start apache2. It should set the environment variable STUDENT to your username and surname. Port 80 should be exposed. Bear in mind that Ubuntu uses apt and apt-get to manage packages. Save it as a file called LO3_D.
 
@@ -215,7 +215,7 @@ ________________________________________________________________________________
 
 *lo4:*
 
-7. [LO4_M, 9 pts]
+7. 
 Deploy WordPress and MySQL containers using podman. The WordPress container should successfully connect to the MySQL database container. Use images mysql:5.7 and wordpress:php8.2 from Docker Hub. The WordPress container should be named wordpress and the MySQL container should be named mysql. The WordPress container should not connect to the database by using the root user. Set required environment variables as you see fit. Note down the command used to complete this task into a file called LO4_M.
 
    
@@ -226,7 +226,7 @@ Deploy WordPress and MySQL containers using podman. The WordPress container shou
 | Document commands | `echo "podman run -d --name mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wpuser -e MYSQL_PASSWORD=wpuserpw mysql:5.7" > LO4_M`<br>`echo "podman run -d --name wordpress --link mysql -e WORDPRESS_DB_HOST=mysql -e WORDPRESS_DB_USER=wpuser -e WORDPRESS_DB_PASSWORD=wpuserpw -e WORDPRESS_DB_NAME=wordpress -p 8080:80 wordpress:php8.2" >> LO4_M` | Record the commands used in previous steps into a file named `LO4_M`. The `>` operator is used to create or overwrite the file with the first command, while `>>` is used to append the second command to the same file. |
 
 
-8. [LO4_D, 5 pts]
+8.
 Choose and justify an appropriate methodology for running a simple Python application that requires a database for persistent data storage for the following scenarios:
 a) Development and testing on a developer laptop
 b) Production deployment with at least 10 instances and persistent storage
@@ -242,7 +242,7 @@ Note that the company has multiple applications which it needs to deploy and als
    
 *lo5:*
 
-9. [LO5_M, 4.5 pts]
+9. 
 Troubleshoot why the following command is wrong and why the container does not start successfully/terminates immediately. Explain your findings and correct the command. Note down both your findings and the command.
     
 | Task | Issue Identified | Corrected Command | Explanation |
@@ -250,7 +250,7 @@ Troubleshoot why the following command is wrong and why the container does not s
 | 9    | Missing root password specification and incorrect syntax for detach mode. | `podman run -d --name mysql -e MYSQL_USER=mike -e MYSQL_PASSWORD=mike -e MYSQL_ROOT_PASSWORD=notSoSecret mysql:5.7` | Added `MYSQL_ROOT_PASSWORD=notSoSecret` to satisfy MySQL's requirement for a root password. `-d` for detached mode is correctly used before specifying the image name. |
 
 
-10. [LO5_M, 4.5 pts]
+10.
 What feature of container images enables you to deploy containers across multiple environments without having to care about accidentally changing the application code?
     
 | Task | Feature | Description |
@@ -258,7 +258,7 @@ What feature of container images enables you to deploy containers across multipl
 | 10   | Consistency and Isolation | Container images ensure that the software runs the same way in any environment. This isolation between the application and its surroundings means developers don't have to worry about changes in the environment affecting the application's performance or functionalities. |
 
 
-11. [LO5_D, 5 pts]
+11. 
 Troubleshoot why the following Dockerfile is not building. Explain your findings and correct the command. Note down both your findings and the corrected Dockerfile.
     
 | Task | Issue Identified | Corrected Dockerfile Line | Explanation |
@@ -269,7 +269,7 @@ Troubleshoot why the following Dockerfile is not building. Explain your findings
 
  *lo6:*
  
-12. [LO6_M, 9 pts]
+12. 
 Deploy the httpd application on OpenShift. There should be 2 pods in the deployment and a service load balancing traffic coming to httpd pods. Create a route to expose the service. If you decide to use a template, you need to use template called custom-httpd or template which has its description set to Custom HTTPD. If you are not using a template do not set resource limits and requests.
 Note that you will not be able to test your route without adding your FQDN to the list of URLs in /etc/hosts file. It is enough that it is created in OpenShift.
 There should be no image stream configured for this task. If you end up with image pull error, but you deployed everything as stated it is fine.
@@ -282,7 +282,7 @@ There should be no image stream configured for this task. If you end up with ima
 | Use a custom template (optional) | `oc new-app -f custom-httpd-template.yaml` | If using a custom template named 'custom-httpd-template.yaml', deploy it with this command. Ensure the template includes specifications for no resource limits, as required. |
 
 
-13. [LO6_D, 5 pts]
+13. 
 Why would you use Docker Swarm instead of OpenShift for a simple startup company not having a dedicated DevOps employee?
 
 | Task | Reason | Description | Command |
